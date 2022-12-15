@@ -1,4 +1,6 @@
-FROM php:8.0.2-fpm-alpine3.13
+FROM php:8.1-fpm-alpine
+
+WORKDIR /var/www/html
 
 RUN apk --update --no-cache add git
 RUN docker-php-ext-install pdo_mysql
@@ -6,16 +8,13 @@ RUN docker-php-ext-install pdo_mysql
 RUN apk update
 RUN apk upgrade
 RUN apk add bash
+RUN apk add tzdata
 
-#COPY --from=composer /usr/bin/composer /usr/bin/composer
-
-WORKDIR /var/www/app
+ENV TZ="America/Sao_Paulo"
 
 # Installing Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Installing symfony CLI
-RUN wget https://get.symfony.com/cli/installer -O - | bash
-RUN mv /root/.symfony/bin/symfony /usr/local/bin/symfony
+RUN chown -R www-data .
 
 EXPOSE 9000

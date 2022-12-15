@@ -12,18 +12,15 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class teste extends AbstractController
 {
-    
-    public function __construct(Private EntityManagerInterface $em, Private UserPasswordHasherInterface $encoder)
-{
-}
 
-#[Route('/api/rotinha', name: 'register', methods: 'POST')]
-public function register(Request $request): JsonResponse
-{
-    
-    return new JsonResponse(["ola"]);
-}
+    public function __construct(private EntityManagerInterface $em, private UserPasswordHasherInterface $encoder)
+    {
+    }
 
-    
+    #[Route('/api/rotinha', name: 'register', methods: 'POST')]
+    public function register(Request $request): JsonResponse
+    {
 
+        return new JsonResponse(["ola"]);
+    }
 }
