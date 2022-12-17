@@ -2,14 +2,13 @@
 
 namespace App\Controller\api;
 
-use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+#[Route('/api', methods: ['GET'])]
 class teste extends AbstractController
 {
 
@@ -17,10 +16,10 @@ class teste extends AbstractController
     {
     }
 
-    #[Route('/api/rotinha', name: 'register', methods: 'POST')]
-    public function register(Request $request): JsonResponse
+    #[Route('/index', name: 'index', methods: ['GET'])]
+    public function welcome(Request $request)
     {
 
-        return new JsonResponse(["ola"]);
+        return $this->render('templates/welcome.html.twig', []);
     }
 }

@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   app:
-    container_name: checkin_app
+    container_name: base_app
     env_file:
       - ./app/.env
     build:
@@ -11,7 +11,7 @@ services:
     volumes:
       - ./app:/var/www/html
     networks:
-      - checkin-network
+      - base-network
     depends_on:
       - db
 
@@ -25,7 +25,7 @@ services:
       - /sql
       - /var/lib/mysql
     networks:
-      - checkin-network
+      - base-network
 
   nginx:
     build:
@@ -38,12 +38,12 @@ services:
     ports:
       - '8181:80'
     networks:
-      - checkin-network
+      - base-network
     depends_on:
       - app
 
 networks:
-  checkin-network:
+  base-network:
 
 volumes:
   db:
