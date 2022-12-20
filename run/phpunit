@@ -1,0 +1,1 @@
+sudo docker exec -t base_app vendor/bin/phpunit

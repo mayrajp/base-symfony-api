@@ -1,0 +1,1 @@
+sudo docker exec -t base_app tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src --rules=@Symfony -v

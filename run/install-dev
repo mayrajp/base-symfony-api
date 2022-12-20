@@ -1,0 +1,4 @@
+sudo docker exec -t base_app composer install
+sudo docker exec -t base_app bin/console d:m:m --no-interaction
+sudo docker exec -t base_app bin/console lexik:jwt:generate-keypair
+sudo docker exec -t base_app composer --working-dir=tools/php-cs-fixer install

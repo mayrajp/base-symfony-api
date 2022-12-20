@@ -1,0 +1,1 @@
+sudo docker exec -t base_app phpdbg -qrr vendor/bin/phpunit --coverage-html coverage-report/
