@@ -23,6 +23,8 @@
     
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% block body %}
+            {% include '/global/sidebar.html.twig' %}
+        {% endblock %}
     </body>
 </html>
