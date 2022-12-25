@@ -9,17 +9,31 @@
     margin-top: 15px;
     width: 85%;
     border: 3px solid white;
-    padding: 460px;
     border-radius: 10px;
     background-color: white;
+    height: 950px;
+    width: auto;
   }
+
+
 </style>
 {% endblock %}
 
 {% block body %}
 
 <div class="card center">
+
+  <div class="card text-bg-secondary mb-3" style="max-width: 18rem;">
+    <div class="card-header">Usuários Cadastrados</div>
+    <div class="card-body">
+      <h5 class="card-title">{{ info }}</h5>
+    </div>
+  </div>
+</div>
+
   
+
+
 </div>
 
 {% endblock %}

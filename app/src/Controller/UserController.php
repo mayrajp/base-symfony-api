@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: '/admin/user', name: 'admin_user_')]
@@ -15,7 +16,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/index', name: 'index', methods: ['GET'])]
-    public function index()
+    public function index(Request $request)
     {
         try{
 
@@ -36,6 +37,9 @@ class UserController extends AbstractController
     #[Route('/create', name: 'create', methods: ['GET'])]
     public function create()
     {
+        return $this->render('user/create.html.twig', [
+          
+        ]);
         
     }
 

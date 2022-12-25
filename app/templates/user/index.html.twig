@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Usuários{% endblock %}
+{% block stylesheets %}
+
+<style>
+    .center {
+        margin-left: 270px;
+        margin-top: 15px;
+        width: 85%;
+        border: 3px solid white;
+        border-radius: 10px;
+        background-color: white;
+        height: 950px;
+        width: auto;
+    }
+
+    body {
+        font-family: 'Roboto', sans-serif;
+        background: #f0f5f9;
+    }
+
+    .card-info {
+        margin-left: 20px;
+        margin-top: -100px;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+
+<div class="card center">
+
+    <div class="row">
+       
+
+            <h1>Usuários do Sistema <a href="{{ path('admin_user_create')}}" class="btn btn-dark">Novo</a></h1>
+
+            <table class="table table-striped" id="users-list">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nome</th>
+                        <th>Permissão</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        {% if user.roles is empty %}
+                        <td></td>
+                        {% else %}
+                        <td>{{user.roles[0]}}</td>
+                        {%endif%}
+                        <td>
+                            <a class="btn btn-dark" href="{{ path('admin_user_update', {'id' : user.id}) }}">
+                                Alterar cadastro
+                            </a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="13">Nenhum usuário encontrado</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+    </div>
+
+</div>
+{% endblock %}
+
+
+{% block javascripts %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#users-list').DataTable().order([1, 'asc']).draw();
+    });
+</script>
+{% endblock %}
