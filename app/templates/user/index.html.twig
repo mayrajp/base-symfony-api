@@ -24,6 +24,9 @@
         margin-left: 20px;
         margin-top: -100px;
     }
+    
+
+    
 </style>
 {% endblock %}
 
@@ -42,6 +45,7 @@
                         <th>Id</th>
                         <th>Nome</th>
                         <th>Permissão</th>
+                        <th>Status</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -55,10 +59,21 @@
                         {% else %}
                         <td>{{user.roles[0]}}</td>
                         {%endif%}
+                        <td>{{ user.isActive == true ? '<span class="badge text-bg-success">Ativo</span>' : '<span class="badge text-bg-danger">Inativo</span>' }}</td>
                         <td>
                             <a class="btn btn-dark" href="{{ path('admin_user_update', {'id' : user.id}) }}">
                                 Alterar cadastro
                             </a>
+                                {% if user.isActive == true %}
+                                    <a class="btn btn-danger" href="{{ path('admin_user_change_status', {'id' : user.id}) }}">
+                                        Desativar usuário
+                                    </a>
+
+                                {% else %}
+                                    <a class="btn btn-success" href="{{ path('admin_user_change_status', {'id' : user.id}) }}">
+                                        Ativar usuário
+                                    </a>
+                                {% endif %}
                         </td>
                     </tr>
                     {% else %}

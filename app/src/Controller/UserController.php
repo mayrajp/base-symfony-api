@@ -12,46 +12,46 @@ class UserController extends AbstractController
 {
     public function __construct(private UserService $userService)
     {
-        
     }
 
     #[Route('/index', name: 'index', methods: ['GET'])]
     public function index(Request $request)
     {
-        try{
+        try {
 
             $users = $this->userService->generateUsersList();
 
             return $this->render('user/index.html.twig', [
                 'users' => $users,
             ]);
-            
-
-        }catch(\Exception $exception)
-        {
+        } catch (\Exception $exception) {
             return $exception->getMessage();
         }
-
     }
 
     #[Route('/create', name: 'create', methods: ['GET'])]
     public function create()
     {
-        return $this->render('user/create.html.twig', [
-          
-        ]);
-        
+        return $this->render('user/create.html.twig', []);
     }
 
-    #[Route('/update/{id}', name: 'update', methods: ['POST'])]
-    public function update()
+    #[Route('/update/{id}', name: 'update', methods: ['GET'])]
+    public function update(Request $request, $id)
     {
-
+        return $this->render('user/update.html.twig', []);
     }
 
-    #[Route('/update/{id}', name: 'update', methods: ['POST'])]
-    public function changeUserStatus()
+    #[Route('/change/status/{id}', name: 'change_status', methods: ['GET'])]
+    public function changeStatus(Request $request, $id)
     {
 
+        try {
+
+            $this->userService->changeUserStatus($id);
+
+            return $this->redirectToRoute('admin_user_index');
+        } catch (\Exception $exception) {
+            return $exception->getMessage();
+        }
     }
 }

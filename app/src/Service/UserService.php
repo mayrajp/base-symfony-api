@@ -2,7 +2,9 @@
 
 namespace App\Service;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
+use PhpParser\Builder\Use_;
 
 class UserService
 {
@@ -13,7 +15,7 @@ class UserService
 
     public function generateUsersList()
     {
-        return $this->userRepository->findActiveUsers();
+        return $this->userRepository->findAll();
     }
 
     public function create()
@@ -26,8 +28,21 @@ class UserService
 
     }
 
-    public function changeUserStatus()
+    public function changeUserStatus(int $id) : User
     {
+        $user = $this->userRepository->findOneBy(["id" => $id]);
+
+        if(empty($user)){
+            throw new \Exception("User not found");
+        }
+        
+        $oldStatus = $user->isActive();
+
+        $user->setActive(!$oldStatus);
+
+        $this->userRepository->persist($user);
+
+        return $user;
 
     }
 
