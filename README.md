@@ -13,7 +13,7 @@ To run project:
 
 Create User:
 
-- Inside the container run command bin/console app:new:user
+- Inside the container run command bin/console `app:new:user`
 
 To open project on browser:
 
