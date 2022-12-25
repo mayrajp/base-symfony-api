@@ -30,4 +30,4 @@ To run cs-dixer (outside container)
 - run/cs-fixer
 
 ***Warning**: If you need to regenerate the JWT key, run this command inside the container:
-- bin/console lexik:jwt:generate-keypair
+- bin/console lexik:jwt:generate-keypair --overwrite
