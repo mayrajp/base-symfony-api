@@ -34,6 +34,34 @@
     <div class="row">
         <h1>Editar Usuário</h1>
 
+        {{ form_start(form) }}
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="dados-titulo">Edite os dados de usuário:</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Nome</label>
+                    <p>{{ form_widget(form.username,{ 'attr' : {'class': "form-control"}}) }}</p>
+                </div>
+                <div class="col-md-4">
+                    <label>Email</label>
+                    <p>{{ form_widget(form.email,{ 'attr' : {'class': "form-control"}}) }}</p>
+                </div>
+                <div class="col-md-4">
+                    <label>Permissão</label>
+                    <p>{{ form_widget(form.role,{ 'attr' : {'class': "form-control"}}) }}</p>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">
+                <i class="fa fa-save"></i> Salvar
+            </button>
+        </div>
+        {{ form_end(form) }}
+
     </div>
 
 </div>

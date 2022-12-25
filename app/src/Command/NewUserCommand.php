@@ -30,6 +30,7 @@ class NewUserCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $username = $io->ask('Enter user username');
         $password = $io->ask('User password');
+        $email = $io->ask('Enter user email');
         $role = $io->ask("Enter user's role ([1] for admin or [2] for user)");
         $role_string = self::ROLES[$role][0];
         $io->writeln("creating user with this username: $username and this password: $password and role $role_string");
@@ -39,6 +40,7 @@ class NewUserCommand extends Command
             ->setUsername($username)
             ->setRoles(self::ROLES[$role])
             ->setActive(true)
+            ->setEmail($email)
             ->setPassword($this->passwordHasher->hashPassword($user, $password));
 
         $this->userRepository->add($user, true);

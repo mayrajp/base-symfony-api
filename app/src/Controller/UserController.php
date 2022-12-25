@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\FormType\NewUserType;
+use App\FormType\UpdateUserType;
 use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,28 +32,78 @@ class UserController extends AbstractController
         }
     }
 
-    #[Route('/create', name: 'create', methods: ['GET'])]
-    public function create()
+    #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
+    public function create(Request $request)
     {
-        return $this->render('user/create.html.twig', []);
+        $form = $this->createForm(NewUserType::class);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $data = $form->getData();
+
+            $response = $this->userService->create($data);
+
+            if ($response == null) {
+                $this->addFlash('error', 'Este email já está sendo usado por outro usuário.');
+
+
+                return $this->render('user/create.html.twig', [
+                    'form' => $form->createView(),
+                ]);
+            }
+
+            $this->addFlash('success', 'Usuário criado com sucesso.');
+
+            return $this->redirectToRoute('admin_user_index');
+        }
+
+        return $this->render('user/create.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
-    #[Route('/update/{id}', name: 'update', methods: ['GET'])]
-    public function update(Request $request, $id)
+    #[Route('/update/{user}', name: 'update', methods: ['GET', 'POST'])]
+    public function update(Request $request, User $user)
     {
-        return $this->render('user/update.html.twig', []);
+        $form = $this->createForm(UpdateUserType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $response = $this->userService->update($user, $request->request->all());
+
+            if ($response == null) {
+                $this->addFlash('error', 'Este email já está sendo usado por outro usuário.');
+
+
+                return $this->render('user/update.html.twig', [
+                    'form' => $form->createView(),
+                ]);
+            }
+
+            $this->addFlash('success', 'Usuário alterado com sucesso.');
+
+            return $this->redirectToRoute('admin_user_index');
+        }
+
+        return $this->render('user/update.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
-    #[Route('/change/status/{id}', name: 'change_status', methods: ['GET'])]
-    public function changeStatus(Request $request, $id)
+    #[Route('/change/status/{user}', name: 'change_status', methods: ['GET'])]
+    public function changeStatus(Request $request, User $user)
     {
-
         try {
 
-            $this->userService->changeUserStatus($id);
+            $this->userService->changeUserStatus($user);
 
             return $this->redirectToRoute('admin_user_index');
         } catch (\Exception $exception) {
+
             return $exception->getMessage();
         }
     }
