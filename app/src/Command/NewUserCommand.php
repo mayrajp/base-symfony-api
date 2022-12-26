@@ -41,6 +41,8 @@ class NewUserCommand extends Command
             ->setRoles(self::ROLES[$role])
             ->setActive(true)
             ->setEmail($email)
+            ->setCreatedAt(new \DateTime())
+            ->setUpdatedAt(new \DateTime())
             ->setPassword($this->passwordHasher->hashPassword($user, $password));
 
         $this->userRepository->add($user, true);
